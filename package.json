@@ -1,9 +1,13 @@
 {
-  "name": "סטודיו-לצילום-דלתא-1743500311442",
+  "name": "חנות-בגדים-ביתא-1743502982798",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "framer-motion": "^10.0.0"
+    "next": "13.4.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "typescript": "5.0.0",
+    "tailwindcss": "3.3.0"
   },
   "devDependencies": {}
 }
