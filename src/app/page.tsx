@@ -1,6 +1,6 @@
 'use client';
 
-import AboutSection from '../components/AboutSection';
+import ServicesSection from '../components/ServicesSection';
 
 import React from 'react';
 
@@ -9,7 +9,7 @@ export default function Home() {
     <main className="min-h-screen flex flex-col items-center p-8">
       <h1 className="text-4xl font-bold mb-8">ברוכים הבאים</h1>
       {/* רכיבים */}
-      <AboutSection />
+      <ServicesSection />
       
     </main>
   );
