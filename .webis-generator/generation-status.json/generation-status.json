@@ -1,10 +1,10 @@
 {
-  "timestamp": "2025-04-01T09:39:37.579Z",
+  "timestamp": "2025-04-01T09:40:08.198Z",
   "status": {
     "totalComponents": 8,
-    "completedComponents": 1,
+    "completedComponents": 2,
     "failedComponents": 0,
-    "progress": 13
+    "progress": 25
   },
   "components": [
     {
@@ -16,7 +16,7 @@
     {
       "name": "AboutUsSection",
       "type": "about",
-      "status": "pending",
+      "status": "completed",
       "description": "Section highlighting the studio's experience and expertise"
     },
     {
