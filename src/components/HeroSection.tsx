@@ -1,161 +1,99 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
 import Image from 'next/image';
+import { useEffect, useRef } from 'react';
 
 interface HeroSectionProps {
-  onCtaClick?: () => void;
+  className?: string;
 }
 
-const HeroSection: React.FC<HeroSectionProps> = ({ onCtaClick }) => {
-  // Refs for animation elements
-  const headlineRef = useRef<HTMLHeadingElement>(null);
-  const subheadlineRef = useRef<HTMLParagraphElement>(null);
-  const ctaRef = useRef<HTMLButtonElement>(null);
-  const overlayRef = useRef<HTMLDivElement>(null);
+const HeroSection: React.FC<HeroSectionProps> = ({ className = '' }) => {
+  const heroRef = useRef<HTMLDivElement>(null);
 
+  // Minimal animation effect on component mount
   useEffect(() => {
-    // Animation for headline
-    if (headlineRef.current) {
-      headlineRef.current.style.opacity = '0';
-      headlineRef.current.style.transform = 'translateY(20px)';
+    const heroElement = heroRef.current;
+    if (heroElement) {
+      heroElement.style.opacity = '0';
+      heroElement.style.transform = 'translateY(20px)';
+      
       setTimeout(() => {
-        if (headlineRef.current) {
-          headlineRef.current.style.transition = 'opacity 0.8s ease-out, transform 0.8s ease-out';
-          headlineRef.current.style.opacity = '1';
-          headlineRef.current.style.transform = 'translateY(0)';
-        }
-      }, 300);
-    }
-
-    // Animation for subheadline
-    if (subheadlineRef.current) {
-      subheadlineRef.current.style.opacity = '0';
-      subheadlineRef.current.style.transform = 'translateY(20px)';
-      setTimeout(() => {
-        if (subheadlineRef.current) {
-          subheadlineRef.current.style.transition = 'opacity 0.8s ease-out, transform 0.8s ease-out';
-          subheadlineRef.current.style.opacity = '1';
-          subheadlineRef.current.style.transform = 'translateY(0)';
-        }
-      }, 600);
-    }
-
-    // Animation for CTA button
-    if (ctaRef.current) {
-      ctaRef.current.style.opacity = '0';
-      ctaRef.current.style.transform = 'translateY(20px)';
-      setTimeout(() => {
-        if (ctaRef.current) {
-          ctaRef.current.style.transition = 'opacity 0.8s ease-out, transform 0.8s ease-out';
-          ctaRef.current.style.opacity = '1';
-          ctaRef.current.style.transform = 'translateY(0)';
-        }
-      }, 900);
-    }
-
-    // Animation for overlay
-    if (overlayRef.current) {
-      overlayRef.current.style.opacity = '0';
-      setTimeout(() => {
-        if (overlayRef.current) {
-          overlayRef.current.style.transition = 'opacity 1.2s ease-out';
-          overlayRef.current.style.opacity = '0.6';
-        }
+        heroElement.style.transition = 'opacity 0.8s ease-out, transform 0.8s ease-out';
+        heroElement.style.opacity = '1';
+        heroElement.style.transform = 'translateY(0)';
       }, 100);
     }
   }, []);
 
-  const handleCtaClick = () => {
-    if (onCtaClick) {
-      onCtaClick();
-    }
-  };
-
   return (
     <section 
-      className="relative h-screen w-full overflow-hidden" 
+      ref={heroRef}
       dir="rtl" 
-      aria-label="סטודיו לצילום מוביל בישראל"
+      className={`relative min-h-[90vh] overflow-hidden ${className}`}
+      aria-labelledby="hero-heading"
     >
-      {/* Background Image with Overlay */}
-      <div className="absolute inset-0 w-full h-full">
-        <Image
-          src="/photography-studio.jpg" // Replace with your actual image path
-          alt="סטודיו לצילום מקצועי"
-          layout="fill"
-          objectFit="cover"
-          priority
-          className="z-0"
-        />
-        {/* Gradient overlay for better text readability */}
-        <div 
-          ref={overlayRef}
-          className="absolute inset-0 bg-gradient-to-b from-black/70 to-black/40 z-10"
-        ></div>
-      </div>
-
-      {/* Content Container */}
-      <div className="relative z-20 h-full w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col justify-center items-end h-full text-white">
-          <div className="max-w-2xl space-y-8 text-right">
-            {/* Headline */}
+      {/* Background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#45B7D1]/20 to-[#D4A5A5]/30 z-0"></div>
+      
+      {/* Decorative circles - glassmorphism elements */}
+      <div className="absolute top-20 right-[10%] w-64 h-64 rounded-full bg-[#45B7D1]/20 backdrop-blur-md border border-white/20 shadow-lg z-0"></div>
+      <div className="absolute bottom-20 left-[5%] w-80 h-80 rounded-full bg-[#D4A5A5]/20 backdrop-blur-md border border-white/20 shadow-lg z-0"></div>
+      
+      <div className="container mx-auto px-4 py-12 md:py-24 flex flex-col md:flex-row items-center justify-between relative z-10">
+        {/* Text content */}
+        <div className="w-full md:w-1/2 mb-12 md:mb-0 text-right">
+          <div className="backdrop-blur-sm bg-white/30 p-8 md:p-10 rounded-2xl border border-white/40 shadow-lg">
             <h1 
-              ref={headlineRef}
-              className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight"
+              id="hero-heading"
+              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-gray-800 leading-tight"
+              style={{ fontFamily: 'var(--font-playful, sans-serif)' }}
             >
-              <span className="text-[#D4A5A5]">סטודיו לצילום</span> מוביל בישראל
+              חנות בגדים מוביל בישראל
             </h1>
             
-            {/* Subheadline */}
-            <p 
-              ref={subheadlineRef}
-              className="text-xl md:text-2xl font-light text-gray-100 mt-4"
-            >
+            <p className="text-xl md:text-2xl mb-8 text-gray-700">
               חווית לקוח מושלמת בכל ביקור
             </p>
             
-            {/* CTA Button */}
-            <div className="mt-8">
-              <button
-                ref={ctaRef}
-                onClick={handleCtaClick}
-                className="px-8 py-4 bg-[#45B7D1] hover:bg-[#3da6be] text-white font-medium rounded-md transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#D4A5A5] focus:ring-opacity-50"
-                aria-label="קבע תור עכשיו לסטודיו הצילום"
-              >
-                קבע תור עכשיו
-              </button>
-            </div>
+            <button 
+              className="bg-[#45B7D1] hover:bg-[#3aa6c0] text-white font-bold py-3 px-8 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-lg"
+              aria-label="קבע תור עכשיו"
+            >
+              קבע תור עכשיו
+            </button>
           </div>
         </div>
+        
+        {/* Image container with glassmorphism effect */}
+        <div className="w-full md:w-1/2 relative">
+          <div className="backdrop-blur-md bg-white/20 p-3 rounded-2xl border border-white/30 shadow-xl overflow-hidden">
+            <div className="relative w-full h-[400px] md:h-[500px] rounded-xl overflow-hidden">
+              <Image
+                src="/tech-clothing-image.jpg" // Replace with your actual image path
+                alt="בגדים בסגנון טכנולוגי מודרני"
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                priority
+                className="object-cover"
+              />
+              
+              {/* Overlay with brand name */}
+              <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-t from-[#45B7D1]/60 to-transparent">
+                <h2 className="text-3xl md:text-4xl font-bold text-white drop-shadow-lg" style={{ fontFamily: 'var(--font-playful, sans-serif)' }}>
+                  חנות בגדים ביתא
+                </h2>
+              </div>
+            </div>
+          </div>
+          
+          {/* Decorative element */}
+          <div className="absolute -bottom-5 -right-5 w-32 h-32 rounded-full bg-[#D4A5A5]/40 backdrop-blur-sm border border-white/20 shadow-lg z-0"></div>
+        </div>
       </div>
-
-      {/* Decorative Elements - Minimal Photography-related shapes */}
-      <div className="absolute bottom-10 left-10 w-20 h-20 border-2 border-[#D4A5A5] rounded-full opacity-60 z-10 hidden md:block" 
-        style={{
-          animation: 'float 6s ease-in-out infinite'
-        }}
-      ></div>
-      <div className="absolute top-20 right-20 w-12 h-12 border-2 border-[#45B7D1] opacity-60 z-10 hidden md:block"
-        style={{
-          animation: 'float 4s ease-in-out infinite 1s'
-        }}
-      ></div>
-
-      {/* Add animation keyframes via style tag */}
-      <style jsx>{`
-        @keyframes float {
-          0% {
-            transform: translateY(0px);
-          }
-          50% {
-            transform: translateY(-20px);
-          }
-          100% {
-            transform: translateY(0px);
-          }
-        }
-      `}</style>
+      
+      {/* Floating elements for added depth */}
+      <div className="absolute top-[30%] left-[15%] w-16 h-16 rounded-full bg-[#45B7D1]/30 backdrop-blur-sm border border-white/20 shadow-md"></div>
+      <div className="absolute bottom-[20%] right-[20%] w-24 h-24 rounded-full bg-[#D4A5A5]/30 backdrop-blur-sm border border-white/20 shadow-md"></div>
     </section>
   );
 };
